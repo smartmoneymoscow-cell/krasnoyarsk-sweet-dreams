@@ -839,6 +839,95 @@ function Field({
 }
 
 /* -------------------------------------------------------------------------- */
+/* App Download                                                                */
+/* -------------------------------------------------------------------------- */
+function AppDownload() {
+  return (
+    <section id="app" className="relative overflow-hidden py-24 md:py-32">
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[var(--primary)] via-[var(--caramel)] to-[var(--primary)]" />
+      <div
+        className="absolute inset-0 -z-10 opacity-30 mix-blend-overlay"
+        style={{
+          background:
+            "radial-gradient(60% 50% at 80% 20%, rgba(255,215,140,0.7), transparent 60%), radial-gradient(50% 50% at 10% 90%, rgba(255,240,210,0.5), transparent 60%)",
+        }}
+      />
+      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 md:grid-cols-2">
+        <div className="text-[var(--cream)]">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/60 bg-white/10 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-[var(--gold-soft)] backdrop-blur">
+            <Smartphone className="h-3.5 w-3.5" /> Мобильное приложение
+          </div>
+          <h2 className="text-display text-4xl font-semibold leading-tight md:text-6xl">
+            Скачайте приложение <br />
+            <span className="italic text-[var(--gold-soft)]">Красноярские сладости</span>
+          </h2>
+          <p className="mt-6 max-w-lg text-base leading-relaxed text-[var(--cream)]/85 md:text-lg">
+            Заказывайте десерты в один тап, копите бонусы за каждую покупку и
+            получайте персональные подборки от наших кондитеров.
+          </p>
+          <ul className="mt-6 space-y-2 text-sm text-[var(--cream)]/85">
+            <li className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-[var(--gold-soft)]" /> Бонус 500 ₽ за первый заказ
+            </li>
+            <li className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-[var(--gold-soft)]" /> Отслеживание курьера онлайн
+            </li>
+            <li className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-[var(--gold-soft)]" /> Ранний доступ к новинкам
+            </li>
+          </ul>
+          <div className="mt-10 flex flex-wrap gap-4">
+            <a
+              href="#"
+              className="group inline-flex items-center gap-3 rounded-2xl bg-[var(--cream)] px-6 py-3.5 text-[var(--primary)] shadow-elegant transition hover:scale-[1.02]"
+            >
+              <Apple className="h-7 w-7" />
+              <div className="text-left leading-tight">
+                <div className="text-[10px] uppercase tracking-[0.2em] text-[var(--primary)]/70">
+                  Скачать в
+                </div>
+                <div className="text-display text-lg font-semibold">App Store</div>
+              </div>
+            </a>
+            <a
+              href="#"
+              className="group inline-flex items-center gap-3 rounded-2xl bg-[var(--cream)] px-6 py-3.5 text-[var(--primary)] shadow-elegant transition hover:scale-[1.02]"
+            >
+              <Download className="h-7 w-7" />
+              <div className="text-left leading-tight">
+                <div className="text-[10px] uppercase tracking-[0.2em] text-[var(--primary)]/70">
+                  Доступно в
+                </div>
+                <div className="text-display text-lg font-semibold">Google Play</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div className="relative flex justify-center md:justify-end">
+          <div className="absolute inset-0 -z-10 rounded-full bg-[var(--gold)]/30 blur-3xl" />
+          <div className="animate-float-slow relative aspect-[9/18] w-64 rounded-[2.5rem] border-[10px] border-[var(--foreground)]/90 bg-gradient-to-br from-[var(--cream)] to-[var(--vanilla)] shadow-elegant">
+            <div className="absolute left-1/2 top-2 h-5 w-24 -translate-x-1/2 rounded-full bg-[var(--foreground)]/90" />
+            <div className="flex h-full flex-col items-center justify-center gap-3 px-4 text-center">
+              <div className="text-display text-2xl font-semibold text-[var(--primary)]">
+                Красноярские <br />сладости
+              </div>
+              <div className="text-[10px] uppercase tracking-[0.3em] text-[var(--caramel)]">
+                Кафе и кондитерская
+              </div>
+              <div className="mt-2 h-px w-16 bg-[var(--gold)]" />
+              <div className="text-xs text-muted-foreground">
+                Заказ · Бонусы · Доставка
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
 /* Footer                                                                      */
 /* -------------------------------------------------------------------------- */
 function Footer() {
