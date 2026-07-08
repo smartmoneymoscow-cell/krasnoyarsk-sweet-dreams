@@ -14,6 +14,9 @@ import {
   Sparkles,
   Star,
   Snowflake,
+  Smartphone,
+  Apple,
+  Download,
 } from "lucide-react";
 
 import heroCity from "@/assets/hero-city.asset.json";
@@ -31,13 +34,13 @@ import cappuccino from "@/assets/product-cappuccino.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Красноярск — авторская кондитерская и кофейня" },
+      { title: "Красноярские сладости — кафе и кондитерская" },
       {
         name: "description",
         content:
-          "Пряничный Красноярск оживает. Авторские десерты, ароматный кофе и доставка сладостей по городу. Каждый десерт — как маленький город из карамели и белого шоколада.",
+          "Красноярские сладости — кафе и кондитерская. Авторские десерты, ароматный кофе и доставка сладостей по Красноярску.",
       },
-      { property: "og:title", content: "Красноярск — авторская кондитерская и кофейня" },
+      { property: "og:title", content: "Красноярские сладости — кафе и кондитерская" },
       {
         property: "og:description",
         content: "Авторские десерты, ароматный кофе и доставка по Красноярску.",
@@ -57,7 +60,7 @@ export const Route = createFileRoute("/")({
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap",
       },
     ],
   }),
@@ -77,6 +80,7 @@ function HomePage() {
       <Delivery />
       <Testimonials />
       <Contact />
+      <AppDownload />
       <Footer />
     </div>
   );
@@ -152,9 +156,9 @@ function Nav() {
         <a href="#top" className="flex items-center gap-3">
           <Monogram />
           <div className="leading-tight">
-            <div className="text-display text-lg tracking-wide">Красноярск</div>
+            <div className="text-display text-lg font-semibold tracking-wide">Красноярские сладости</div>
             <div className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground">
-              Patisserie · Coffee
+              Кафе и кондитерская
             </div>
           </div>
         </a>
@@ -226,9 +230,9 @@ function Hero() {
             />
           </div>
         ))}
-        {/* Warm tint + gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--cream)]/40 via-transparent to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-background/20 to-transparent" />
+        {/* Warm tint + gradient overlays — stronger for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--cream)]/50 via-background/30 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-background/55 to-background/10" />
         <div
           className="absolute inset-0 opacity-40 mix-blend-soft-light"
           style={{
@@ -253,38 +257,41 @@ function Hero() {
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-end px-6 pb-24 pt-40 md:justify-center">
-        <div className="max-w-2xl animate-reveal">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/40 bg-white/50 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-[var(--caramel)] backdrop-blur">
+        <div
+          className="max-w-2xl animate-reveal rounded-3xl bg-background/55 p-8 backdrop-blur-md md:bg-transparent md:p-0 md:backdrop-blur-0"
+          style={{ textShadow: "0 2px 24px rgba(255,248,230,0.75)" }}
+        >
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/50 bg-white/80 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-[var(--caramel)] shadow-soft backdrop-blur">
             <Snowflake className="h-3.5 w-3.5" />
             Зимняя коллекция · Красноярск
           </div>
-          <h1 className="text-display text-5xl leading-[0.95] text-foreground sm:text-6xl md:text-7xl lg:text-8xl">
-            Пряничный <br />
-            <span className="text-gold-gradient italic">Красноярск</span> <br />
-            оживает.
+          <h1 className="text-display text-5xl font-semibold leading-[0.95] text-foreground sm:text-6xl md:text-7xl lg:text-8xl">
+            Красноярские <br />
+            <span className="text-gold-gradient italic">сладости</span> <br />
+            каждый день.
           </h1>
-          <p className="mt-8 max-w-xl text-base leading-relaxed text-foreground/75 md:text-lg">
-            Авторская кондитерская и кофейня. Мы превращаем город в десерт —
-            карамельный Енисей, часовня из белого шоколада, Столбы из имбирного
-            теста. Каждое утро с ароматом свежей выпечки и тёплого капучино.
+          <p className="mt-8 max-w-xl text-base font-medium leading-relaxed text-foreground/90 md:text-lg">
+            Кафе и кондитерская в сердце Красноярска. Авторские десерты,
+            ароматный кофе и доставка по всему городу — каждое утро с ароматом
+            свежей выпечки.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a
               href="#menu"
-              className="group inline-flex items-center gap-3 rounded-full bg-[var(--primary)] px-8 py-4 text-sm text-[var(--primary-foreground)] shadow-elegant transition hover:scale-[1.02]"
+              className="group inline-flex items-center gap-3 rounded-full bg-[var(--primary)] px-8 py-4 text-sm font-medium text-[var(--primary-foreground)] shadow-elegant transition hover:scale-[1.02]"
             >
               Смотреть меню
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
             <a
               href="#delivery"
-              className="inline-flex items-center gap-3 rounded-full border border-foreground/20 bg-white/50 px-8 py-4 text-sm text-foreground backdrop-blur transition hover:bg-white/80"
+              className="inline-flex items-center gap-3 rounded-full border border-foreground/30 bg-white/80 px-8 py-4 text-sm font-medium text-foreground backdrop-blur transition hover:bg-white"
             >
               Доставка по городу
             </a>
           </div>
 
-          <div className="mt-14 flex flex-wrap items-center gap-8 text-xs uppercase tracking-[0.25em] text-foreground/60">
+          <div className="mt-14 flex flex-wrap items-center gap-8 text-xs font-medium uppercase tracking-[0.25em] text-foreground/75">
             <div className="flex items-center gap-2">
               <Star className="h-3.5 w-3.5 fill-[var(--gold)] text-[var(--gold)]" />
               4.9 · 2 300 отзывов
@@ -560,17 +567,17 @@ function ProductCard({ item, index }: { item: Item; index: number }) {
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       </div>
       <div className="flex items-start justify-between gap-4 p-6">
-        <div>
+        <div className="min-w-0 flex-1">
           <h3 className="text-display text-2xl leading-tight">{item.name}</h3>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
             {item.desc}
           </p>
         </div>
-        <div className="text-right">
-          <div className="text-display text-lg text-[var(--caramel)]">
+        <div className="shrink-0 text-right">
+          <div className="text-display text-4xl font-semibold leading-none text-[var(--caramel)] md:text-5xl">
             {item.price}
           </div>
-          <button className="mt-3 inline-flex items-center gap-1 text-xs uppercase tracking-[0.2em] text-foreground/70 transition hover:text-[var(--caramel)]">
+          <button className="mt-4 inline-flex items-center gap-1 rounded-full bg-[var(--primary)] px-4 py-2 text-xs font-medium uppercase tracking-[0.15em] text-[var(--primary-foreground)] transition hover:scale-[1.03]">
             В корзину <ArrowRight className="h-3 w-3" />
           </button>
         </div>
@@ -832,6 +839,95 @@ function Field({
 }
 
 /* -------------------------------------------------------------------------- */
+/* App Download                                                                */
+/* -------------------------------------------------------------------------- */
+function AppDownload() {
+  return (
+    <section id="app" className="relative overflow-hidden py-24 md:py-32">
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[var(--primary)] via-[var(--caramel)] to-[var(--primary)]" />
+      <div
+        className="absolute inset-0 -z-10 opacity-30 mix-blend-overlay"
+        style={{
+          background:
+            "radial-gradient(60% 50% at 80% 20%, rgba(255,215,140,0.7), transparent 60%), radial-gradient(50% 50% at 10% 90%, rgba(255,240,210,0.5), transparent 60%)",
+        }}
+      />
+      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 md:grid-cols-2">
+        <div className="text-[var(--cream)]">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/60 bg-white/10 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-[var(--gold-soft)] backdrop-blur">
+            <Smartphone className="h-3.5 w-3.5" /> Мобильное приложение
+          </div>
+          <h2 className="text-display text-4xl font-semibold leading-tight md:text-6xl">
+            Скачайте приложение <br />
+            <span className="italic text-[var(--gold-soft)]">Красноярские сладости</span>
+          </h2>
+          <p className="mt-6 max-w-lg text-base leading-relaxed text-[var(--cream)]/85 md:text-lg">
+            Заказывайте десерты в один тап, копите бонусы за каждую покупку и
+            получайте персональные подборки от наших кондитеров.
+          </p>
+          <ul className="mt-6 space-y-2 text-sm text-[var(--cream)]/85">
+            <li className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-[var(--gold-soft)]" /> Бонус 500 ₽ за первый заказ
+            </li>
+            <li className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-[var(--gold-soft)]" /> Отслеживание курьера онлайн
+            </li>
+            <li className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-[var(--gold-soft)]" /> Ранний доступ к новинкам
+            </li>
+          </ul>
+          <div className="mt-10 flex flex-wrap gap-4">
+            <a
+              href="#"
+              className="group inline-flex items-center gap-3 rounded-2xl bg-[var(--cream)] px-6 py-3.5 text-[var(--primary)] shadow-elegant transition hover:scale-[1.02]"
+            >
+              <Apple className="h-7 w-7" />
+              <div className="text-left leading-tight">
+                <div className="text-[10px] uppercase tracking-[0.2em] text-[var(--primary)]/70">
+                  Скачать в
+                </div>
+                <div className="text-display text-lg font-semibold">App Store</div>
+              </div>
+            </a>
+            <a
+              href="#"
+              className="group inline-flex items-center gap-3 rounded-2xl bg-[var(--cream)] px-6 py-3.5 text-[var(--primary)] shadow-elegant transition hover:scale-[1.02]"
+            >
+              <Download className="h-7 w-7" />
+              <div className="text-left leading-tight">
+                <div className="text-[10px] uppercase tracking-[0.2em] text-[var(--primary)]/70">
+                  Доступно в
+                </div>
+                <div className="text-display text-lg font-semibold">Google Play</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div className="relative flex justify-center md:justify-end">
+          <div className="absolute inset-0 -z-10 rounded-full bg-[var(--gold)]/30 blur-3xl" />
+          <div className="animate-float-slow relative aspect-[9/18] w-64 rounded-[2.5rem] border-[10px] border-[var(--foreground)]/90 bg-gradient-to-br from-[var(--cream)] to-[var(--vanilla)] shadow-elegant">
+            <div className="absolute left-1/2 top-2 h-5 w-24 -translate-x-1/2 rounded-full bg-[var(--foreground)]/90" />
+            <div className="flex h-full flex-col items-center justify-center gap-3 px-4 text-center">
+              <div className="text-display text-2xl font-semibold text-[var(--primary)]">
+                Красноярские <br />сладости
+              </div>
+              <div className="text-[10px] uppercase tracking-[0.3em] text-[var(--caramel)]">
+                Кафе и кондитерская
+              </div>
+              <div className="mt-2 h-px w-16 bg-[var(--gold)]" />
+              <div className="text-xs text-muted-foreground">
+                Заказ · Бонусы · Доставка
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
 /* Footer                                                                      */
 /* -------------------------------------------------------------------------- */
 function Footer() {
@@ -839,8 +935,11 @@ function Footer() {
     <footer className="border-t border-[var(--gold)]/20 bg-[var(--cream)] py-14">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 text-center">
         <Monogram />
-        <div className="text-display text-2xl">
-          Красноярск · <span className="italic text-[var(--caramel)]">patisserie</span>
+        <div className="text-display text-2xl font-semibold">
+          Красноярские <span className="italic text-[var(--caramel)]">сладости</span>
+        </div>
+        <div className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground">
+          Кафе и кондитерская
         </div>
         <div className="gold-divider w-40" />
         <p className="max-w-md text-sm text-muted-foreground">
@@ -855,7 +954,7 @@ function Footer() {
           <a href="#contact" className="hover:text-foreground">Контакты</a>
         </div>
         <div className="text-[11px] text-muted-foreground/70">
-          © {new Date().getFullYear()} Красноярск Patisserie. Все права защищены.
+          © {new Date().getFullYear()} Красноярские сладости. Все права защищены.
         </div>
       </div>
     </footer>
