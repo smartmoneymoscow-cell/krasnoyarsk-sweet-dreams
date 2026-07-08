@@ -80,6 +80,7 @@ function HomePage() {
       <Delivery />
       <Testimonials />
       <Contact />
+      <AppDownload />
       <Footer />
     </div>
   );
