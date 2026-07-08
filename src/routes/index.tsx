@@ -229,9 +229,9 @@ function Hero() {
             />
           </div>
         ))}
-        {/* Warm tint + gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--cream)]/40 via-transparent to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-background/20 to-transparent" />
+        {/* Warm tint + gradient overlays — stronger for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--cream)]/50 via-background/30 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-background/55 to-background/10" />
         <div
           className="absolute inset-0 opacity-40 mix-blend-soft-light"
           style={{
@@ -256,38 +256,41 @@ function Hero() {
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-end px-6 pb-24 pt-40 md:justify-center">
-        <div className="max-w-2xl animate-reveal">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/40 bg-white/50 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-[var(--caramel)] backdrop-blur">
+        <div
+          className="max-w-2xl animate-reveal rounded-3xl bg-background/55 p-8 backdrop-blur-md md:bg-transparent md:p-0 md:backdrop-blur-0"
+          style={{ textShadow: "0 2px 24px rgba(255,248,230,0.75)" }}
+        >
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/50 bg-white/80 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-[var(--caramel)] shadow-soft backdrop-blur">
             <Snowflake className="h-3.5 w-3.5" />
             Зимняя коллекция · Красноярск
           </div>
-          <h1 className="text-display text-5xl leading-[0.95] text-foreground sm:text-6xl md:text-7xl lg:text-8xl">
-            Пряничный <br />
-            <span className="text-gold-gradient italic">Красноярск</span> <br />
-            оживает.
+          <h1 className="text-display text-5xl font-semibold leading-[0.95] text-foreground sm:text-6xl md:text-7xl lg:text-8xl">
+            Красноярские <br />
+            <span className="text-gold-gradient italic">сладости</span> <br />
+            каждый день.
           </h1>
-          <p className="mt-8 max-w-xl text-base leading-relaxed text-foreground/75 md:text-lg">
-            Авторская кондитерская и кофейня. Мы превращаем город в десерт —
-            карамельный Енисей, часовня из белого шоколада, Столбы из имбирного
-            теста. Каждое утро с ароматом свежей выпечки и тёплого капучино.
+          <p className="mt-8 max-w-xl text-base font-medium leading-relaxed text-foreground/90 md:text-lg">
+            Кафе и кондитерская в сердце Красноярска. Авторские десерты,
+            ароматный кофе и доставка по всему городу — каждое утро с ароматом
+            свежей выпечки.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a
               href="#menu"
-              className="group inline-flex items-center gap-3 rounded-full bg-[var(--primary)] px-8 py-4 text-sm text-[var(--primary-foreground)] shadow-elegant transition hover:scale-[1.02]"
+              className="group inline-flex items-center gap-3 rounded-full bg-[var(--primary)] px-8 py-4 text-sm font-medium text-[var(--primary-foreground)] shadow-elegant transition hover:scale-[1.02]"
             >
               Смотреть меню
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
             <a
               href="#delivery"
-              className="inline-flex items-center gap-3 rounded-full border border-foreground/20 bg-white/50 px-8 py-4 text-sm text-foreground backdrop-blur transition hover:bg-white/80"
+              className="inline-flex items-center gap-3 rounded-full border border-foreground/30 bg-white/80 px-8 py-4 text-sm font-medium text-foreground backdrop-blur transition hover:bg-white"
             >
               Доставка по городу
             </a>
           </div>
 
-          <div className="mt-14 flex flex-wrap items-center gap-8 text-xs uppercase tracking-[0.25em] text-foreground/60">
+          <div className="mt-14 flex flex-wrap items-center gap-8 text-xs font-medium uppercase tracking-[0.25em] text-foreground/75">
             <div className="flex items-center gap-2">
               <Star className="h-3.5 w-3.5 fill-[var(--gold)] text-[var(--gold)]" />
               4.9 · 2 300 отзывов
