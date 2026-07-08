@@ -14,6 +14,9 @@ import {
   Sparkles,
   Star,
   Snowflake,
+  Smartphone,
+  Apple,
+  Download,
 } from "lucide-react";
 
 import heroCity from "@/assets/hero-city.asset.json";
