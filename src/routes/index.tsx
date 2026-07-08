@@ -935,8 +935,11 @@ function Footer() {
     <footer className="border-t border-[var(--gold)]/20 bg-[var(--cream)] py-14">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 text-center">
         <Monogram />
-        <div className="text-display text-2xl">
-          Красноярск · <span className="italic text-[var(--caramel)]">patisserie</span>
+        <div className="text-display text-2xl font-semibold">
+          Красноярские <span className="italic text-[var(--caramel)]">сладости</span>
+        </div>
+        <div className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground">
+          Кафе и кондитерская
         </div>
         <div className="gold-divider w-40" />
         <p className="max-w-md text-sm text-muted-foreground">
