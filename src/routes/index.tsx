@@ -31,13 +31,13 @@ import cappuccino from "@/assets/product-cappuccino.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Красноярск — авторская кондитерская и кофейня" },
+      { title: "Красноярские сладости — кафе и кондитерская" },
       {
         name: "description",
         content:
-          "Пряничный Красноярск оживает. Авторские десерты, ароматный кофе и доставка сладостей по городу. Каждый десерт — как маленький город из карамели и белого шоколада.",
+          "Красноярские сладости — кафе и кондитерская. Авторские десерты, ароматный кофе и доставка сладостей по Красноярску.",
       },
-      { property: "og:title", content: "Красноярск — авторская кондитерская и кофейня" },
+      { property: "og:title", content: "Красноярские сладости — кафе и кондитерская" },
       {
         property: "og:description",
         content: "Авторские десерты, ароматный кофе и доставка по Красноярску.",
@@ -57,7 +57,7 @@ export const Route = createFileRoute("/")({
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap",
       },
     ],
   }),
