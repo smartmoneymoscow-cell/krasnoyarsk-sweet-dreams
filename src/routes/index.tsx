@@ -566,17 +566,17 @@ function ProductCard({ item, index }: { item: Item; index: number }) {
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       </div>
       <div className="flex items-start justify-between gap-4 p-6">
-        <div>
+        <div className="min-w-0 flex-1">
           <h3 className="text-display text-2xl leading-tight">{item.name}</h3>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
             {item.desc}
           </p>
         </div>
-        <div className="text-right">
-          <div className="text-display text-lg text-[var(--caramel)]">
+        <div className="shrink-0 text-right">
+          <div className="text-display text-4xl font-semibold leading-none text-[var(--caramel)] md:text-5xl">
             {item.price}
           </div>
-          <button className="mt-3 inline-flex items-center gap-1 text-xs uppercase tracking-[0.2em] text-foreground/70 transition hover:text-[var(--caramel)]">
+          <button className="mt-4 inline-flex items-center gap-1 rounded-full bg-[var(--primary)] px-4 py-2 text-xs font-medium uppercase tracking-[0.15em] text-[var(--primary-foreground)] transition hover:scale-[1.03]">
             В корзину <ArrowRight className="h-3 w-3" />
           </button>
         </div>
