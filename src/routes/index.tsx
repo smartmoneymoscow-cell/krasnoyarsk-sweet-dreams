@@ -155,9 +155,9 @@ function Nav() {
         <a href="#top" className="flex items-center gap-3">
           <Monogram />
           <div className="leading-tight">
-            <div className="text-display text-lg tracking-wide">Красноярск</div>
+            <div className="text-display text-lg font-semibold tracking-wide">Красноярские сладости</div>
             <div className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground">
-              Patisserie · Coffee
+              Кафе и кондитерская
             </div>
           </div>
         </a>
