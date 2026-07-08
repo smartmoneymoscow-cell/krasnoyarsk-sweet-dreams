@@ -954,7 +954,7 @@ function Footer() {
           <a href="#contact" className="hover:text-foreground">Контакты</a>
         </div>
         <div className="text-[11px] text-muted-foreground/70">
-          © {new Date().getFullYear()} Красноярск Patisserie. Все права защищены.
+          © {new Date().getFullYear()} Красноярские сладости. Все права защищены.
         </div>
       </div>
     </footer>
