@@ -77,13 +77,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Красноярск — авторская кондитерская и кофейня" },
+      { title: "Красноярские сладости — кафе и кондитерская" },
       {
         name: "description",
         content:
-          "Пряничный Красноярск. Авторские десерты, ароматный кофе и доставка сладостей по городу.",
+          "Красноярские сладости. Авторские десерты, ароматный кофе и доставка сладостей по Красноярску.",
       },
-      { property: "og:title", content: "Красноярск — авторская кондитерская и кофейня" },
+      { property: "og:title", content: "Красноярские сладости — кафе и кондитерская" },
       {
         property: "og:description",
         content: "Авторские десерты, кофе и доставка по Красноярску.",
