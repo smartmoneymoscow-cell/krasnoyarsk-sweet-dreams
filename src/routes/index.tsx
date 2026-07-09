@@ -1,22 +1,21 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState, useMemo } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useMemo } from "react";
 import {
   ArrowRight,
-  Coffee,
-  Croissant,
-  Cake,
   Truck,
   Clock,
   MapPin,
   Phone,
   Instagram,
-  Send,
   Sparkles,
   Star,
   Snowflake,
   Smartphone,
   Apple,
   Download,
+  Cake,
+  Coffee,
+  Plus,
 } from "lucide-react";
 
 import heroCity from "@/assets/hero-city.asset.json";
@@ -24,12 +23,12 @@ import coffeeCity from "@/assets/coffee-city.asset.json";
 import chapelGold from "@/assets/chapel-gold.asset.json";
 import chapelGreen from "@/assets/chapel-green.asset.json";
 
-import eclair from "@/assets/product-eclair.jpg";
-import tart from "@/assets/product-tart.jpg";
-import croissant from "@/assets/product-croissant.jpg";
-import cake from "@/assets/product-cake.jpg";
-import macarons from "@/assets/product-macarons.jpg";
 import cappuccino from "@/assets/product-cappuccino.jpg";
+
+import { SiteNav } from "@/components/site-nav";
+import { PhoneMenuMock } from "@/components/phone-menu-mock";
+import { MENU } from "@/lib/menu-data";
+import { useCart, formatRub } from "@/lib/cart";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -49,15 +48,8 @@ export const Route = createFileRoute("/")({
       { property: "og:image", content: heroCity.url },
     ],
     links: [
-      {
-        rel: "preconnect",
-        href: "https://fonts.googleapis.com",
-      },
-      {
-        rel: "preconnect",
-        href: "https://fonts.gstatic.com",
-        crossOrigin: "anonymous",
-      },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap",
@@ -71,23 +63,23 @@ function HomePage() {
   return (
     <div className="relative overflow-x-hidden bg-background text-foreground">
       <SugarDust />
-      <Nav />
+      <SiteNav />
       <Hero />
       <Marquee />
       <Signature />
       <Story />
-      <Menu />
+      <Featured />
       <Delivery />
       <Testimonials />
-      <Contact />
       <AppDownload />
+      <Contact />
       <Footer />
     </div>
   );
 }
 
 /* -------------------------------------------------------------------------- */
-/* Sugar dust — global falling particles                                       */
+/* Sugar dust                                                                  */
 /* -------------------------------------------------------------------------- */
 function SugarDust() {
   const particles = useMemo(
@@ -126,76 +118,7 @@ function SugarDust() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Navigation                                                                  */
-/* -------------------------------------------------------------------------- */
-function Nav() {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const links = [
-    { href: "#menu", label: "Меню" },
-    { href: "#story", label: "О нас" },
-    { href: "#delivery", label: "Доставка" },
-    { href: "#contact", label: "Контакты" },
-  ];
-
-  return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "glass-panel py-3 shadow-soft"
-          : "bg-transparent py-5"
-      }`}
-    >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
-        <a href="#top" className="flex items-center gap-3">
-          <Monogram />
-          <div className="leading-tight">
-            <div className="text-display text-lg font-semibold tracking-wide">Красноярские сладости</div>
-            <div className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground">
-              Кафе и кондитерская
-            </div>
-          </div>
-        </a>
-        <nav className="hidden items-center gap-9 md:flex">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="group relative text-sm text-foreground/80 transition hover:text-foreground"
-            >
-              {l.label}
-              <span className="absolute -bottom-1 left-0 h-px w-0 bg-[var(--gold)] transition-all duration-300 group-hover:w-full" />
-            </a>
-          ))}
-        </nav>
-        <a
-          href="#delivery"
-          className="hidden items-center gap-2 rounded-full border border-[var(--gold)]/50 bg-[var(--gold)]/10 px-5 py-2.5 text-sm text-foreground transition hover:bg-[var(--gold)]/20 md:inline-flex"
-        >
-          Заказать <ArrowRight className="h-3.5 w-3.5" />
-        </a>
-      </div>
-    </header>
-  );
-}
-
-function Monogram() {
-  return (
-    <div className="relative flex h-11 w-11 items-center justify-center rounded-full border border-[var(--gold)]/60 bg-gradient-to-br from-[var(--vanilla)] to-[var(--gold-soft)] shadow-soft">
-      <span className="text-display text-xl leading-none text-[var(--caramel)]">К</span>
-      <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-[var(--gold)] shadow-[0_0_8px_var(--gold)]" />
-    </div>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/* Hero — "video-like" cinematic gingerbread Krasnoyarsk sequence              */
+/* Hero — editorial split: solid cream text panel + cinematic image gallery    */
 /* -------------------------------------------------------------------------- */
 function Hero() {
   const slides = [
@@ -204,94 +127,64 @@ function Hero() {
     { src: coffeeCity.url, kb: "ken-burns-c" },
     { src: chapelGreen.url, kb: "ken-burns-a" },
   ];
-  const total = slides.length;
-  const cycle = total * 7; // 7s per slide
+  const cycle = slides.length * 7;
 
   return (
-    <section id="top" className="relative min-h-screen w-full overflow-hidden">
-      {/* Cinematic background */}
-      <div className="absolute inset-0">
-        {slides.map((s, i) => (
-          <div
-            key={i}
-            className="absolute inset-0"
-            style={{
-              animation: `slide-fade ${cycle}s ease-in-out ${(i * cycle) / total}s infinite`,
-            }}
-          >
-            <img
-              src={s.src}
-              alt="Пряничный Красноярск"
-              className="absolute inset-0 h-full w-full object-cover"
-              style={{
-                animation: `${s.kb} ${cycle}s ease-in-out ${(i * cycle) / total}s infinite alternate`,
-                willChange: "transform",
-              }}
-            />
-          </div>
-        ))}
-        {/* Warm tint + gradient overlays — stronger for readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--cream)]/50 via-background/30 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-background/55 to-background/10" />
-        <div
-          className="absolute inset-0 opacity-40 mix-blend-soft-light"
-          style={{
-            background:
-              "radial-gradient(60% 40% at 20% 30%, rgba(255,215,140,0.5), transparent 70%)",
-          }}
-        />
-      </div>
+    <section
+      id="top"
+      className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-[var(--vanilla)] via-[var(--cream)] to-[var(--gold-soft)]/60 pt-24"
+    >
+      {/* Decorative background */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-70"
+        style={{
+          background:
+            "radial-gradient(60% 50% at 15% 20%, color-mix(in oklab, var(--gold) 22%, transparent), transparent 60%), radial-gradient(50% 40% at 90% 80%, color-mix(in oklab, var(--caramel) 18%, transparent), transparent 60%)",
+        }}
+      />
 
-      {/* Steam wisps */}
-      <div className="pointer-events-none absolute bottom-24 left-1/3 hidden md:block">
-        {[0, 1, 2].map((i) => (
-          <span
-            key={i}
-            className="absolute block h-24 w-8 rounded-full bg-white/40 blur-2xl"
-            style={{
-              left: i * 18,
-              animation: `steam-rise ${5 + i}s ease-out ${i * 0.8}s infinite`,
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-end px-6 pb-24 pt-40 md:justify-center">
-        <div
-          className="max-w-2xl animate-reveal rounded-3xl bg-background/55 p-8 backdrop-blur-md md:bg-transparent md:p-0 md:backdrop-blur-0"
-          style={{ textShadow: "0 2px 24px rgba(255,248,230,0.75)" }}
-        >
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/50 bg-white/80 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-[var(--caramel)] shadow-soft backdrop-blur">
+      <div className="relative mx-auto grid min-h-[calc(100vh-6rem)] max-w-7xl grid-cols-1 items-center gap-10 px-6 pb-16 md:grid-cols-12 md:gap-14 md:pb-24">
+        {/* Left: text on solid, readable background */}
+        <div className="animate-reveal md:col-span-6">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/50 bg-[var(--cream)] px-4 py-1.5 text-[11px] uppercase tracking-[0.3em] text-[var(--caramel)] shadow-soft">
             <Snowflake className="h-3.5 w-3.5" />
             Зимняя коллекция · Красноярск
           </div>
-          <h1 className="text-display text-5xl font-semibold leading-[0.95] text-foreground sm:text-6xl md:text-7xl lg:text-8xl">
-            Красноярские <br />
-            <span className="text-gold-gradient italic">сладости</span> <br />
+
+          <h1 className="text-display text-[3.25rem] font-semibold leading-[0.95] tracking-tight text-[var(--primary)] sm:text-6xl md:text-7xl lg:text-[5.5rem]">
+            Красноярские
+            <br />
+            <span className="relative inline-block italic text-[var(--caramel)]">
+              сладости
+              <span className="absolute -bottom-2 left-0 h-[3px] w-full rounded-full bg-gradient-to-r from-[var(--gold)] via-[var(--caramel)] to-transparent" />
+            </span>
+            <br />
             каждый день.
           </h1>
-          <p className="mt-8 max-w-xl text-base font-medium leading-relaxed text-foreground/90 md:text-lg">
+
+          <p className="mt-8 max-w-xl text-base leading-relaxed text-foreground/80 md:text-lg">
             Кафе и кондитерская в сердце Красноярска. Авторские десерты,
             ароматный кофе и доставка по всему городу — каждое утро с ароматом
             свежей выпечки.
           </p>
+
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <a
-              href="#menu"
+            <Link
+              to="/menu"
               className="group inline-flex items-center gap-3 rounded-full bg-[var(--primary)] px-8 py-4 text-sm font-medium text-[var(--primary-foreground)] shadow-elegant transition hover:scale-[1.02]"
             >
               Смотреть меню
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </a>
+            </Link>
             <a
               href="#delivery"
-              className="inline-flex items-center gap-3 rounded-full border border-foreground/30 bg-white/80 px-8 py-4 text-sm font-medium text-foreground backdrop-blur transition hover:bg-white"
+              className="inline-flex items-center gap-3 rounded-full border border-[var(--primary)]/25 bg-white/70 px-8 py-4 text-sm font-medium text-[var(--primary)] transition hover:bg-white"
             >
               Доставка по городу
             </a>
           </div>
 
-          <div className="mt-14 flex flex-wrap items-center gap-8 text-xs font-medium uppercase tracking-[0.25em] text-foreground/75">
+          <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-xs font-medium uppercase tracking-[0.25em] text-foreground/70">
             <div className="flex items-center gap-2">
               <Star className="h-3.5 w-3.5 fill-[var(--gold)] text-[var(--gold)]" />
               4.9 · 2 300 отзывов
@@ -300,13 +193,63 @@ function Hero() {
             <div>Ручная работа</div>
           </div>
         </div>
-      </div>
 
-      {/* Scroll cue */}
-      <div className="absolute inset-x-0 bottom-6 z-10 flex justify-center">
-        <div className="flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-foreground/60">
-          <span>Пролистайте</span>
-          <span className="h-10 w-px bg-gradient-to-b from-[var(--gold)] to-transparent" />
+        {/* Right: cinematic image stack */}
+        <div className="relative md:col-span-6">
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-lg overflow-hidden rounded-[2rem] border border-[var(--gold)]/40 shadow-elegant md:aspect-[3/4]">
+            {slides.map((s, i) => (
+              <div
+                key={i}
+                className="absolute inset-0"
+                style={{
+                  animation: `slide-fade ${cycle}s ease-in-out ${(i * cycle) / slides.length}s infinite`,
+                }}
+              >
+                <img
+                  src={s.src}
+                  alt="Пряничный Красноярск"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  style={{
+                    animation: `${s.kb} ${cycle}s ease-in-out ${(i * cycle) / slides.length}s infinite alternate`,
+                    willChange: "transform",
+                  }}
+                />
+              </div>
+            ))}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+            {/* Floating caption card */}
+            <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between rounded-2xl bg-[var(--cream)]/95 px-5 py-3 shadow-soft backdrop-blur">
+              <div>
+                <div className="text-[10px] uppercase tracking-[0.25em] text-[var(--caramel)]">
+                  Живая витрина
+                </div>
+                <div className="text-display text-base font-semibold">
+                  Пряничный Красноярск
+                </div>
+              </div>
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--gold)] text-[var(--primary)]">
+                <Sparkles className="h-4 w-4" />
+              </div>
+            </div>
+          </div>
+
+          {/* Small floating badges */}
+          <div className="animate-float-slow absolute -left-4 top-6 hidden rounded-2xl border border-[var(--gold)]/40 bg-[var(--cream)] px-4 py-3 shadow-soft md:block">
+            <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+              Доставка
+            </div>
+            <div className="text-display text-lg font-semibold text-[var(--caramel)]">
+              60 минут
+            </div>
+          </div>
+          <div className="animate-float-slow absolute -right-2 bottom-10 hidden rounded-2xl border border-[var(--gold)]/40 bg-[var(--cream)] px-4 py-3 shadow-soft md:block">
+            <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+              Медовик
+            </div>
+            <div className="text-display text-lg font-semibold text-[var(--caramel)]">
+              от 540 ₽
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -342,7 +285,7 @@ function Marquee() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Signature — hero product with side story                                    */
+/* Signature                                                                   */
 /* -------------------------------------------------------------------------- */
 function Signature() {
   return (
@@ -354,8 +297,6 @@ function Signature() {
             <img
               src={cappuccino}
               alt="Капучино на фоне пряничного Красноярска"
-              width={1200}
-              height={1200}
               className="h-full w-full object-cover"
               loading="lazy"
             />
@@ -379,8 +320,7 @@ function Signature() {
           <p className="mt-6 max-w-lg text-base leading-relaxed text-foreground/75">
             Наши мастера отливают часовню Параскевы Пятницы из белого шоколада,
             выпекают Столбы из имбирного теста и укрывают всё сахарной пудрой,
-            как первым снегом. Возьмите чашку кофе и загляните внутрь — город
-            оживёт прямо на блюдце.
+            как первым снегом.
           </p>
           <div className="mt-10 grid grid-cols-3 gap-6">
             <Stat value="120+" label="Авторских десертов" />
@@ -410,11 +350,7 @@ function Story() {
   return (
     <section id="story" className="relative overflow-hidden py-28 md:py-40">
       <div className="absolute inset-0 -z-10 opacity-40">
-        <img
-          src={chapelGreen.url}
-          alt=""
-          className="h-full w-full object-cover"
-        />
+        <img src={chapelGreen.url} alt="" className="h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/70 to-background" />
       </div>
 
@@ -427,11 +363,10 @@ function Story() {
           Мы влюблены в город <br />
           <span className="italic text-[var(--caramel)]">на вкус ванили.</span>
         </h2>
-        <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-foreground/75">
-          Кондитерская «Красноярск» родилась из одного зимнего утра, когда пар
-          от капучино напомнил снег над Енисеем. С тех пор мы каждый день
-          пересобираем город из белого шоколада, карамели и мёда — для тех, кто
-          верит, что красота начинается с маленького.
+        <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-foreground/80">
+          Кондитерская «Красноярские сладости» родилась из одного зимнего утра,
+          когда пар от капучино напомнил снег над Енисеем. С тех пор мы каждый
+          день пересобираем город из белого шоколада, карамели и мёда.
         </p>
         <div className="gold-divider mx-auto mt-14 max-w-md" />
       </div>
@@ -440,149 +375,79 @@ function Story() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Menu                                                                        */
+/* Featured — preview of menu with add-to-cart                                 */
 /* -------------------------------------------------------------------------- */
-type Item = {
-  name: string;
-  desc: string;
-  price: string;
-  img: string;
-  tag?: string;
-};
-
-const menu: Item[] = [
-  {
-    name: "Медовик «Столбы»",
-    desc: "Тонкие медовые коржи, сметанный крем, засахаренная клюква.",
-    price: "540 ₽",
-    img: cake,
-    tag: "Хит",
-  },
-  {
-    name: "Эклер «Енисей»",
-    desc: "Заварное тесто, крем на белом шоколаде, глянцевая карамель.",
-    price: "290 ₽",
-    img: eclair,
-  },
-  {
-    name: "Тарталетка «Часовня»",
-    desc: "Песочная корзинка, ванильный мусс, карамелизированные орехи, золото.",
-    price: "380 ₽",
-    img: tart,
-    tag: "Новинка",
-  },
-  {
-    name: "Круассан ручной складки",
-    desc: "72 слоя, французское масло, сахарная пудра как первый снег.",
-    price: "230 ₽",
-    img: croissant,
-  },
-  {
-    name: "Макаронс «Ассорти»",
-    desc: "Шесть вкусов: ваниль, солёная карамель, фисташка, малина, кофе, роза.",
-    price: "690 ₽",
-    img: macarons,
-  },
-  {
-    name: "Капучино «Пряничный»",
-    desc: "Спешелти-обжарка, молочная пена, нотка пряного сиропа и корицы.",
-    price: "240 ₽",
-    img: cappuccino,
-  },
-];
-
-function Menu() {
-  const [tab, setTab] = useState<"all" | "cakes" | "coffee">("all");
-  const filtered =
-    tab === "all"
-      ? menu
-      : tab === "cakes"
-        ? menu.slice(0, 5)
-        : menu.slice(5);
+function Featured() {
+  const featured = MENU.slice(0, 6);
+  const { add } = useCart();
 
   return (
     <section id="menu" className="relative py-28 md:py-36">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="flex flex-col items-end justify-between gap-8 md:flex-row md:items-end">
+        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div>
             <div className="mb-4 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-[var(--caramel)]">
-              <span className="h-px w-8 bg-[var(--gold)]" /> Меню
+              <span className="h-px w-8 bg-[var(--gold)]" /> Витрина
             </div>
             <h2 className="text-display text-4xl leading-tight md:text-6xl">
-              Витрина, от которой <br />
-              <span className="italic text-[var(--caramel)]">не оторвать глаз.</span>
+              Хиты нашей <br />
+              <span className="italic text-[var(--caramel)]">кондитерской.</span>
             </h2>
           </div>
-          <div className="flex gap-2 rounded-full border border-[var(--gold)]/30 bg-[var(--cream)] p-1">
-            {[
-              { id: "all", label: "Всё" },
-              { id: "cakes", label: "Десерты" },
-              { id: "coffee", label: "Кофе" },
-            ].map((t) => (
-              <button
-                key={t.id}
-                onClick={() => setTab(t.id as "all" | "cakes" | "coffee")}
-                className={`rounded-full px-5 py-2 text-sm transition ${
-                  tab === t.id
-                    ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
-                    : "text-foreground/70 hover:text-foreground"
-                }`}
-              >
-                {t.label}
-              </button>
-            ))}
-          </div>
+          <Link
+            to="/menu"
+            className="inline-flex items-center gap-2 rounded-full border border-[var(--primary)]/30 bg-white/70 px-6 py-3 text-sm text-[var(--primary)] transition hover:bg-white"
+          >
+            Всё меню <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
 
         <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((item, i) => (
-            <ProductCard key={item.name} item={item} index={i} />
+          {featured.map((item, i) => (
+            <article
+              key={item.id}
+              className="group relative overflow-hidden rounded-3xl bg-[var(--cream)] shadow-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-elegant"
+              style={{ animation: `reveal-up 0.9s ${i * 80}ms cubic-bezier(0.16,1,0.3,1) both` }}
+            >
+              <div className="relative aspect-[4/5] overflow-hidden">
+                <img
+                  src={item.img}
+                  alt={item.name}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110"
+                />
+                {item.tag && (
+                  <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-[var(--caramel)] shadow-soft backdrop-blur">
+                    {item.tag}
+                  </span>
+                )}
+              </div>
+              <div className="flex items-end justify-between gap-4 p-6">
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-display text-2xl leading-tight">{item.name}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {item.desc}
+                  </p>
+                </div>
+                <div className="shrink-0 text-right">
+                  <div className="text-display text-4xl font-semibold leading-none text-[var(--caramel)] md:text-5xl">
+                    {formatRub(item.price)}
+                  </div>
+                  <button
+                    onClick={() =>
+                      add({ id: item.id, name: item.name, price: item.price, img: item.img })
+                    }
+                    className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-[var(--primary)] px-4 py-2 text-xs font-medium uppercase tracking-[0.15em] text-[var(--primary-foreground)] transition hover:scale-[1.03]"
+                  >
+                    <Plus className="h-3 w-3" /> В корзину
+                  </button>
+                </div>
+              </div>
+            </article>
           ))}
         </div>
       </div>
     </section>
-  );
-}
-
-function ProductCard({ item, index }: { item: Item; index: number }) {
-  return (
-    <article
-      className="group relative overflow-hidden rounded-3xl bg-[var(--cream)] shadow-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-elegant"
-      style={{ animation: `reveal-up 0.9s ${index * 90}ms cubic-bezier(0.16,1,0.3,1) both` }}
-    >
-      <div className="relative aspect-[4/5] overflow-hidden">
-        <img
-          src={item.img}
-          alt={item.name}
-          width={1200}
-          height={1200}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110"
-        />
-        {item.tag && (
-          <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-[var(--caramel)] shadow-soft backdrop-blur">
-            {item.tag}
-          </span>
-        )}
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-      </div>
-      <div className="flex items-start justify-between gap-4 p-6">
-        <div className="min-w-0 flex-1">
-          <h3 className="text-display text-2xl leading-tight">{item.name}</h3>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            {item.desc}
-          </p>
-        </div>
-        <div className="shrink-0 text-right">
-          <div className="text-display text-4xl font-semibold leading-none text-[var(--caramel)] md:text-5xl">
-            {item.price}
-          </div>
-          <button className="mt-4 inline-flex items-center gap-1 rounded-full bg-[var(--primary)] px-4 py-2 text-xs font-medium uppercase tracking-[0.15em] text-[var(--primary-foreground)] transition hover:scale-[1.03]">
-            В корзину <ArrowRight className="h-3 w-3" />
-          </button>
-        </div>
-      </div>
-    </article>
   );
 }
 
@@ -591,27 +456,12 @@ function ProductCard({ item, index }: { item: Item; index: number }) {
 /* -------------------------------------------------------------------------- */
 function Delivery() {
   const steps = [
-    {
-      icon: Cake,
-      title: "Выбираете десерт",
-      text: "Свежие торты, пирожные и напитки — прямо с витрины сегодняшнего утра.",
-    },
-    {
-      icon: Coffee,
-      title: "Мы упаковываем",
-      text: "Термо-коробки с ленточкой и запиской. Кофе — в теплокружках.",
-    },
-    {
-      icon: Truck,
-      title: "Курьер везёт",
-      text: "60 минут по Красноярску. Бесплатно от 1 500 ₽.",
-    },
+    { icon: Cake, title: "Выбираете десерт", text: "Свежие торты, пирожные и напитки — прямо с витрины сегодняшнего утра." },
+    { icon: Coffee, title: "Мы упаковываем", text: "Термо-коробки с ленточкой и запиской. Кофе — в теплокружках." },
+    { icon: Truck, title: "Курьер везёт", text: "60 минут по Красноярску. Бесплатно от 1 500 ₽." },
   ];
   return (
-    <section
-      id="delivery"
-      className="relative overflow-hidden py-28 md:py-36"
-    >
+    <section id="delivery" className="relative overflow-hidden py-28 md:py-36">
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[var(--vanilla)] via-[var(--cream)] to-[var(--gold-soft)]/60" />
       <div className="mx-auto max-w-7xl px-6">
         <div className="mx-auto max-w-3xl text-center">
@@ -629,7 +479,7 @@ function Delivery() {
           {steps.map((s, i) => (
             <div
               key={s.title}
-              className="group relative overflow-hidden rounded-3xl border border-[var(--gold)]/20 bg-white/60 p-8 backdrop-blur transition hover:-translate-y-1 hover:shadow-elegant"
+              className="group relative overflow-hidden rounded-3xl border border-[var(--gold)]/20 bg-white/70 p-8 backdrop-blur transition hover:-translate-y-1 hover:shadow-elegant"
             >
               <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--gold-soft)] to-[var(--gold)]/80 text-[var(--caramel)] shadow-soft">
                 <s.icon className="h-6 w-6" />
@@ -638,9 +488,7 @@ function Delivery() {
                 Шаг 0{i + 1}
               </div>
               <h3 className="mt-2 text-display text-2xl">{s.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-foreground/75">
-                {s.text}
-              </p>
+              <p className="mt-3 text-sm leading-relaxed text-foreground/75">{s.text}</p>
             </div>
           ))}
         </div>
@@ -666,21 +514,9 @@ function Delivery() {
 /* -------------------------------------------------------------------------- */
 function Testimonials() {
   const quotes = [
-    {
-      name: "Анна К.",
-      role: "гость с 2020",
-      text: "«Пришла за капучино — влюбилась в город заново. Кажется, будто съедаешь маленькую сказку.»",
-    },
-    {
-      name: "Максим Р.",
-      role: "заказчик",
-      text: "«Заказал торт на день рождения дочки — она смотрела на него как на игрушку. Есть было почти жалко. Почти.»",
-    },
-    {
-      name: "Ольга В.",
-      role: "гость",
-      text: "«Лучший медовик в Красноярске. И интерьер как в европейской кофейне — светло, тепло, ванильно.»",
-    },
+    { name: "Анна К.", role: "гость с 2020", text: "«Пришла за капучино — влюбилась в город заново. Кажется, будто съедаешь маленькую сказку.»" },
+    { name: "Максим Р.", role: "заказчик", text: "«Заказал торт на день рождения дочки — она смотрела на него как на игрушку. Есть было почти жалко. Почти.»" },
+    { name: "Ольга В.", role: "гость", text: "«Лучший медовик в Красноярске. И интерьер как в европейской кофейне — светло, тепло, ванильно.»" },
   ];
   return (
     <section className="py-28 md:py-36">
@@ -720,31 +556,127 @@ function Testimonials() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Contact                                                                     */
+/* App Download                                                                */
+/* -------------------------------------------------------------------------- */
+function AppDownload() {
+  const features = [
+    { title: "Бонус 500 ₽", text: "За регистрацию — сразу после первого заказа." },
+    { title: "Живая карта курьера", text: "Смотрите путь заказа в реальном времени." },
+    { title: "Клуб «Пряничный»", text: "Ранний доступ к новинкам и закрытые дегустации." },
+    { title: "Оплата в один тап", text: "Apple Pay, Google Pay и сохранённые карты." },
+  ];
+
+  return (
+    <section id="app" className="relative overflow-hidden py-24 md:py-32">
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[var(--primary)] via-[#3d2416] to-[var(--primary)]" />
+      <div
+        className="absolute inset-0 -z-10 opacity-40 mix-blend-overlay"
+        style={{
+          background:
+            "radial-gradient(60% 50% at 80% 20%, rgba(255,215,140,0.7), transparent 60%), radial-gradient(50% 50% at 10% 90%, rgba(255,240,210,0.5), transparent 60%)",
+        }}
+      />
+      {/* Faint marquee ring */}
+      <div className="pointer-events-none absolute inset-x-0 top-1/2 -z-10 flex -translate-y-1/2 items-center overflow-hidden opacity-[0.06]">
+        <div className="marquee whitespace-nowrap text-display text-[8rem] italic text-[var(--gold-soft)]">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <span key={i}>Красноярские сладости ·</span>
+          ))}
+        </div>
+      </div>
+
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-6 lg:grid-cols-12">
+        {/* Copy */}
+        <div className="text-[var(--cream)] lg:col-span-7">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/50 bg-white/10 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-[var(--gold-soft)] backdrop-blur">
+            <Smartphone className="h-3.5 w-3.5" /> Мобильное приложение
+          </div>
+          <h2 className="text-display text-4xl font-semibold leading-[1.05] md:text-6xl">
+            Вся кондитерская —
+            <br />
+            <span className="italic text-[var(--gold-soft)]">в вашем кармане.</span>
+          </h2>
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-[var(--cream)]/85 md:text-lg">
+            Заказывайте десерты в один тап, копите бонусы за каждую покупку и
+            получайте персональные подборки от наших кондитеров.
+          </p>
+
+          <div className="mt-10 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2">
+            {features.map((f) => (
+              <div
+                key={f.title}
+                className="rounded-2xl border border-[var(--gold-soft)]/25 bg-white/5 p-5 backdrop-blur"
+              >
+                <div className="flex items-center gap-2 text-[var(--gold-soft)]">
+                  <Sparkles className="h-4 w-4" />
+                  <div className="text-display text-lg font-semibold">{f.title}</div>
+                </div>
+                <p className="mt-2 text-sm text-[var(--cream)]/75">{f.text}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <a
+              href="#"
+              className="group inline-flex items-center gap-3 rounded-2xl bg-[var(--cream)] px-6 py-3.5 text-[var(--primary)] shadow-elegant transition hover:scale-[1.02]"
+            >
+              <Apple className="h-7 w-7" />
+              <div className="text-left leading-tight">
+                <div className="text-[10px] uppercase tracking-[0.2em] text-[var(--primary)]/70">
+                  Скачать в
+                </div>
+                <div className="text-display text-lg font-semibold">App Store</div>
+              </div>
+            </a>
+            <a
+              href="#"
+              className="group inline-flex items-center gap-3 rounded-2xl bg-[var(--cream)] px-6 py-3.5 text-[var(--primary)] shadow-elegant transition hover:scale-[1.02]"
+            >
+              <Download className="h-7 w-7" />
+              <div className="text-left leading-tight">
+                <div className="text-[10px] uppercase tracking-[0.2em] text-[var(--primary)]/70">
+                  Доступно в
+                </div>
+                <div className="text-display text-lg font-semibold">Google Play</div>
+              </div>
+            </a>
+            <div className="flex items-center gap-2 text-xs text-[var(--cream)]/70">
+              <Star className="h-3.5 w-3.5 fill-[var(--gold-soft)] text-[var(--gold-soft)]" />
+              4.9 · 12k+ загрузок
+            </div>
+          </div>
+        </div>
+
+        {/* Phone mockup */}
+        <div className="flex justify-center lg:col-span-5 lg:justify-end">
+          <PhoneMenuMock />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Contact — info + map card, no form                                          */
 /* -------------------------------------------------------------------------- */
 function Contact() {
   return (
-    <section
-      id="contact"
-      className="relative overflow-hidden py-28 md:py-36"
-    >
-      <div className="absolute inset-0 -z-10">
-        <img
-          src={coffeeCity.url}
-          alt=""
-          className="h-full w-full object-cover opacity-70"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
-      </div>
+    <section id="contact" className="relative overflow-hidden py-28 md:py-36">
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-[var(--cream)]/40 to-background" />
+
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-14 px-6 md:grid-cols-2">
         <div>
+          <div className="mb-4 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-[var(--caramel)]">
+            <span className="h-px w-8 bg-[var(--gold)]" /> Контакты
+          </div>
           <h2 className="text-display text-4xl leading-tight md:text-6xl">
             Загляните на <br />
             <span className="italic text-[var(--caramel)]">чашку кофе.</span>
           </h2>
-          <p className="mt-6 max-w-md text-lg leading-relaxed text-foreground/75">
+          <p className="mt-6 max-w-md text-lg leading-relaxed text-foreground/80">
             Мы работаем каждый день с раннего утра и до самой ночи. Приходите
-            смотреть, как рождается пряничный город.
+            смотреть, как рождается пряничный город — или заказывайте прямо сейчас.
           </p>
 
           <dl className="mt-10 space-y-6 text-sm">
@@ -761,31 +693,42 @@ function Contact() {
               @krasnoyarsk.patisserie
             </ContactRow>
           </dl>
+
+          <div className="mt-10 flex flex-wrap gap-3">
+            <Link
+              to="/menu"
+              className="inline-flex items-center gap-2 rounded-full bg-[var(--primary)] px-7 py-4 text-sm font-medium text-[var(--primary-foreground)] shadow-elegant transition hover:scale-[1.02]"
+            >
+              Собрать заказ <ArrowRight className="h-4 w-4" />
+            </Link>
+            <a
+              href="tel:+73910000000"
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--primary)]/30 bg-white/70 px-7 py-4 text-sm font-medium text-[var(--primary)] transition hover:bg-white"
+            >
+              <Phone className="h-4 w-4" /> Позвонить
+            </a>
+          </div>
         </div>
 
-        <form
-          onSubmit={(e) => e.preventDefault()}
-          className="glass-panel rounded-3xl p-8 shadow-elegant"
-        >
-          <div className="text-display text-2xl">Заказать доставку</div>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Оставьте номер — перезвоним за 5 минут и соберём заказ.
-          </p>
-          <div className="mt-8 space-y-4">
-            <Field label="Имя" placeholder="Как к вам обращаться" />
-            <Field label="Телефон" placeholder="+7 ___ ___ __ __" type="tel" />
-            <Field label="Что желаете?" placeholder="Медовик, эклер, капучино…" />
+        <div className="relative overflow-hidden rounded-3xl shadow-elegant">
+          <img
+            src={coffeeCity.url}
+            alt="Кафе Красноярские сладости"
+            className="h-full min-h-[420px] w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary)]/70 via-transparent to-transparent" />
+          <div className="absolute bottom-6 left-6 right-6 rounded-2xl bg-[var(--cream)]/95 p-5 shadow-soft backdrop-blur">
+            <div className="text-[10px] uppercase tracking-[0.3em] text-[var(--caramel)]">
+              Флагман
+            </div>
+            <div className="mt-1 text-display text-xl font-semibold">
+              Пр. Мира, 100 · Красноярск
+            </div>
+            <div className="mt-1 text-sm text-muted-foreground">
+              5 минут пешком от Театральной площади
+            </div>
           </div>
-          <button
-            type="submit"
-            className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--primary)] px-6 py-4 text-sm text-[var(--primary-foreground)] shadow-elegant transition hover:scale-[1.01]"
-          >
-            Отправить заявку <Send className="h-4 w-4" />
-          </button>
-          <p className="mt-4 text-center text-xs text-muted-foreground">
-            Нажимая кнопку, вы соглашаетесь с обработкой персональных данных.
-          </p>
-        </form>
+        </div>
       </div>
     </section>
   );
@@ -815,118 +758,6 @@ function ContactRow({
   );
 }
 
-function Field({
-  label,
-  placeholder,
-  type = "text",
-}: {
-  label: string;
-  placeholder: string;
-  type?: string;
-}) {
-  return (
-    <label className="block">
-      <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-        {label}
-      </span>
-      <input
-        type={type}
-        placeholder={placeholder}
-        className="mt-2 w-full rounded-full border border-[var(--gold)]/30 bg-white/70 px-5 py-3.5 text-sm outline-none transition placeholder:text-foreground/40 focus:border-[var(--gold)] focus:bg-white"
-      />
-    </label>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/* App Download                                                                */
-/* -------------------------------------------------------------------------- */
-function AppDownload() {
-  return (
-    <section id="app" className="relative overflow-hidden py-24 md:py-32">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[var(--primary)] via-[var(--caramel)] to-[var(--primary)]" />
-      <div
-        className="absolute inset-0 -z-10 opacity-30 mix-blend-overlay"
-        style={{
-          background:
-            "radial-gradient(60% 50% at 80% 20%, rgba(255,215,140,0.7), transparent 60%), radial-gradient(50% 50% at 10% 90%, rgba(255,240,210,0.5), transparent 60%)",
-        }}
-      />
-      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 md:grid-cols-2">
-        <div className="text-[var(--cream)]">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/60 bg-white/10 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-[var(--gold-soft)] backdrop-blur">
-            <Smartphone className="h-3.5 w-3.5" /> Мобильное приложение
-          </div>
-          <h2 className="text-display text-4xl font-semibold leading-tight md:text-6xl">
-            Скачайте приложение <br />
-            <span className="italic text-[var(--gold-soft)]">Красноярские сладости</span>
-          </h2>
-          <p className="mt-6 max-w-lg text-base leading-relaxed text-[var(--cream)]/85 md:text-lg">
-            Заказывайте десерты в один тап, копите бонусы за каждую покупку и
-            получайте персональные подборки от наших кондитеров.
-          </p>
-          <ul className="mt-6 space-y-2 text-sm text-[var(--cream)]/85">
-            <li className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-[var(--gold-soft)]" /> Бонус 500 ₽ за первый заказ
-            </li>
-            <li className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-[var(--gold-soft)]" /> Отслеживание курьера онлайн
-            </li>
-            <li className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-[var(--gold-soft)]" /> Ранний доступ к новинкам
-            </li>
-          </ul>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <a
-              href="#"
-              className="group inline-flex items-center gap-3 rounded-2xl bg-[var(--cream)] px-6 py-3.5 text-[var(--primary)] shadow-elegant transition hover:scale-[1.02]"
-            >
-              <Apple className="h-7 w-7" />
-              <div className="text-left leading-tight">
-                <div className="text-[10px] uppercase tracking-[0.2em] text-[var(--primary)]/70">
-                  Скачать в
-                </div>
-                <div className="text-display text-lg font-semibold">App Store</div>
-              </div>
-            </a>
-            <a
-              href="#"
-              className="group inline-flex items-center gap-3 rounded-2xl bg-[var(--cream)] px-6 py-3.5 text-[var(--primary)] shadow-elegant transition hover:scale-[1.02]"
-            >
-              <Download className="h-7 w-7" />
-              <div className="text-left leading-tight">
-                <div className="text-[10px] uppercase tracking-[0.2em] text-[var(--primary)]/70">
-                  Доступно в
-                </div>
-                <div className="text-display text-lg font-semibold">Google Play</div>
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <div className="relative flex justify-center md:justify-end">
-          <div className="absolute inset-0 -z-10 rounded-full bg-[var(--gold)]/30 blur-3xl" />
-          <div className="animate-float-slow relative aspect-[9/18] w-64 rounded-[2.5rem] border-[10px] border-[var(--foreground)]/90 bg-gradient-to-br from-[var(--cream)] to-[var(--vanilla)] shadow-elegant">
-            <div className="absolute left-1/2 top-2 h-5 w-24 -translate-x-1/2 rounded-full bg-[var(--foreground)]/90" />
-            <div className="flex h-full flex-col items-center justify-center gap-3 px-4 text-center">
-              <div className="text-display text-2xl font-semibold text-[var(--primary)]">
-                Красноярские <br />сладости
-              </div>
-              <div className="text-[10px] uppercase tracking-[0.3em] text-[var(--caramel)]">
-                Кафе и кондитерская
-              </div>
-              <div className="mt-2 h-px w-16 bg-[var(--gold)]" />
-              <div className="text-xs text-muted-foreground">
-                Заказ · Бонусы · Доставка
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* -------------------------------------------------------------------------- */
 /* Footer                                                                      */
 /* -------------------------------------------------------------------------- */
@@ -934,7 +765,6 @@ function Footer() {
   return (
     <footer className="border-t border-[var(--gold)]/20 bg-[var(--cream)] py-14">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 text-center">
-        <Monogram />
         <div className="text-display text-2xl font-semibold">
           Красноярские <span className="italic text-[var(--caramel)]">сладости</span>
         </div>
@@ -947,11 +777,13 @@ function Footer() {
           как первый снег над Енисеем.
         </p>
         <div className="flex items-center gap-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">
-          <a href="#menu" className="hover:text-foreground">Меню</a>
+          <Link to="/menu" className="hover:text-foreground">Меню</Link>
           <span>·</span>
           <a href="#delivery" className="hover:text-foreground">Доставка</a>
           <span>·</span>
           <a href="#contact" className="hover:text-foreground">Контакты</a>
+          <span>·</span>
+          <a href="#app" className="hover:text-foreground">Приложение</a>
         </div>
         <div className="text-[11px] text-muted-foreground/70">
           © {new Date().getFullYear()} Красноярские сладости. Все права защищены.
