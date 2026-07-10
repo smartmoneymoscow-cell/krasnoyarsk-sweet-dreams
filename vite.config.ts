@@ -15,4 +15,10 @@ export default defineConfig({
   vite: {
     base: process.env.GITHUB_PAGES ? "/krasnoyarsk-sweet-dreams/" : "/",
   },
+  nitro: {
+    preset: "static",
+    prerender: {
+      routes: ["/", "/menu", "/cart"],
+    },
+  },
 });
