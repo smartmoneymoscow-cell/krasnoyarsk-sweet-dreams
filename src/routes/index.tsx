@@ -18,10 +18,10 @@ import {
   Plus,
 } from "lucide-react";
 
-import heroCity from "@/assets/hero-city.asset.json";
-import coffeeCity from "@/assets/coffee-city.asset.json";
-import chapelGold from "@/assets/chapel-gold.asset.json";
-import chapelGreen from "@/assets/chapel-green.asset.json";
+import heroCityImg from "/assets/hero-city.png";
+import coffeeCityImg from "/assets/coffee-city.png";
+import chapelGoldImg from "/assets/chapel-gold.png";
+import chapelGreenImg from "/assets/chapel-green.png";
 
 import cappuccino from "@/assets/product-cappuccino.jpg";
 
@@ -97,10 +97,10 @@ function SugarDust() {
 /* -------------------------------------------------------------------------- */
 function Hero() {
   const slides = [
-    { src: chapelGold.url, kb: "ken-burns-a" },
-    { src: heroCity.url, kb: "ken-burns-b" },
-    { src: coffeeCity.url, kb: "ken-burns-c" },
-    { src: chapelGreen.url, kb: "ken-burns-a" },
+    { src: chapelGoldImg, kb: "ken-burns-a" },
+    { src: heroCityImg, kb: "ken-burns-b" },
+    { src: coffeeCityImg, kb: "ken-burns-c" },
+    { src: chapelGreenImg, kb: "ken-burns-a" },
   ];
   const cycle = slides.length * 7;
 
@@ -137,7 +137,7 @@ function Hero() {
             каждый день.
           </h1>
 
-          <p className="mt-8 max-w-xl text-base leading-relaxed text-foreground/80 md:text-lg">
+          <p className="mt-8 max-w-xl text-base leading-relaxed text-foreground md:text-lg">
             Кафе и кондитерская в сердце Красноярска. Авторские десерты,
             ароматный кофе и доставка по всему городу — каждое утро с ароматом
             свежей выпечки.
@@ -159,7 +159,7 @@ function Hero() {
             </a>
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-xs font-medium uppercase tracking-[0.25em] text-foreground/70">
+          <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-xs font-medium uppercase tracking-[0.25em] text-[var(--foreground)]/80">
             <div className="flex items-center gap-2">
               <Star className="h-3.5 w-3.5 fill-[var(--gold)] text-[var(--gold)]" />
               4.9 · 2 300 отзывов
@@ -208,17 +208,17 @@ function Hero() {
             </div>
           </div>
 
-          {/* Small floating badges */}
-          <div className="animate-float-slow absolute -left-4 top-6 hidden rounded-2xl border border-[var(--gold)]/40 bg-[var(--cream)] px-4 py-3 shadow-soft md:block">
-            <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+          {/* Small floating badges — outside the image frame */}
+          <div className="animate-float-slow absolute -left-16 top-6 hidden rounded-2xl border border-[var(--gold)]/40 bg-[var(--cream)] px-4 py-3 shadow-soft lg:block">
+            <div className="text-[10px] uppercase tracking-[0.25em] text-[var(--foreground)]/60">
               Доставка
             </div>
             <div className="text-display text-lg font-semibold text-[var(--caramel)]">
               60 минут
             </div>
           </div>
-          <div className="animate-float-slow absolute -right-2 bottom-10 hidden rounded-2xl border border-[var(--gold)]/40 bg-[var(--cream)] px-4 py-3 shadow-soft md:block">
-            <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+          <div className="animate-float-slow absolute -right-16 bottom-10 hidden rounded-2xl border border-[var(--gold)]/40 bg-[var(--cream)] px-4 py-3 shadow-soft lg:block">
+            <div className="text-[10px] uppercase tracking-[0.25em] text-[var(--foreground)]/60">
               Медовик
             </div>
             <div className="text-display text-lg font-semibold text-[var(--caramel)]">
@@ -292,7 +292,7 @@ function Signature() {
             Десерт, в котором <br />
             <span className="italic text-[var(--caramel)]">живёт город.</span>
           </h2>
-          <p className="mt-6 max-w-lg text-base leading-relaxed text-foreground/75">
+          <p className="mt-6 max-w-lg text-base leading-relaxed text-foreground">
             Наши мастера отливают часовню Параскевы Пятницы из белого шоколада,
             выпекают Столбы из имбирного теста и укрывают всё сахарной пудрой,
             как первым снегом.
@@ -325,7 +325,7 @@ function Story() {
   return (
     <section id="story" className="relative overflow-hidden py-28 md:py-40">
       <div className="absolute inset-0 -z-10 opacity-40">
-        <img src={chapelGreen.url} alt="" className="h-full w-full object-cover" />
+        <img src={chapelGreenImg} alt="" className="h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/70 to-background" />
       </div>
 
@@ -338,7 +338,7 @@ function Story() {
           Мы влюблены в город <br />
           <span className="italic text-[var(--caramel)]">на вкус ванили.</span>
         </h2>
-        <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-foreground/80">
+        <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-foreground">
           Кондитерская «Красноярские сладости» родилась из одного зимнего утра,
           когда пар от капучино напомнил снег над Енисеем. С тех пор мы каждый
           день пересобираем город из белого шоколада, карамели и мёда.
@@ -463,12 +463,12 @@ function Delivery() {
                 Шаг 0{i + 1}
               </div>
               <h3 className="mt-2 text-display text-2xl">{s.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-foreground/75">{s.text}</p>
+              <p className="mt-3 text-sm leading-relaxed text-foreground">{s.text}</p>
             </div>
           ))}
         </div>
 
-        <div className="mt-14 flex flex-wrap items-center justify-center gap-6 text-sm text-foreground/70">
+        <div className="mt-14 flex flex-wrap items-center justify-center gap-6 text-sm text-foreground">
           <div className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-[var(--gold)]" /> Ежедневно 8:00 — 23:00
           </div>
@@ -649,7 +649,7 @@ function Contact() {
             Загляните на <br />
             <span className="italic text-[var(--caramel)]">чашку кофе.</span>
           </h2>
-          <p className="mt-6 max-w-md text-lg leading-relaxed text-foreground/80">
+          <p className="mt-6 max-w-md text-lg leading-relaxed text-foreground">
             Мы работаем каждый день с раннего утра и до самой ночи. Приходите
             смотреть, как рождается пряничный город — или заказывайте прямо сейчас.
           </p>
@@ -687,7 +687,7 @@ function Contact() {
 
         <div className="relative overflow-hidden rounded-3xl shadow-elegant">
           <img
-            src={coffeeCity.url}
+            src={coffeeCityImg}
             alt="Кафе Красноярские сладости"
             className="h-full min-h-[420px] w-full object-cover"
           />
