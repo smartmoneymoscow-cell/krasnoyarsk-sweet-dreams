@@ -1,10 +1,11 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import tsConfigPaths from "vite-tsconfig-paths";
-import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 
 export default defineConfig({
-  plugins: [TanStackRouterVite(), react(), tailwindcss(), tsConfigPaths()],
+  plugins: [react(), tailwindcss()],
   base: process.env.GITHUB_PAGES ? "/krasnoyarsk-sweet-dreams/" : "/",
+  resolve: {
+    tsconfigPaths: true,
+  },
 });
