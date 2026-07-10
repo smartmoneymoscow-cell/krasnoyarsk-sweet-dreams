@@ -13,21 +13,6 @@ import { SiteNav } from "@/components/site-nav";
 import { useCart, formatRub } from "@/lib/cart";
 
 export const Route = createFileRoute("/cart")({
-  head: () => ({
-    meta: [
-      { title: "Оформление заказа — Красноярские сладости" },
-      { name: "description", content: "Оформите заказ с доставкой по Красноярску." },
-      { name: "robots", content: "noindex" },
-    ],
-    links: [
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap",
-      },
-    ],
-  }),
   component: CartPage,
 });
 

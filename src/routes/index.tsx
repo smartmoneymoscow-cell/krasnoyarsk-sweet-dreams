@@ -31,31 +31,6 @@ import { MENU } from "@/lib/menu-data";
 import { useCart, formatRub } from "@/lib/cart";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Красноярские сладости — кафе и кондитерская" },
-      {
-        name: "description",
-        content:
-          "Красноярские сладости — кафе и кондитерская. Авторские десерты, ароматный кофе и доставка сладостей по Красноярску.",
-      },
-      { property: "og:title", content: "Красноярские сладости — кафе и кондитерская" },
-      {
-        property: "og:description",
-        content: "Авторские десерты, ароматный кофе и доставка по Красноярску.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:image", content: heroCity.url },
-    ],
-    links: [
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap",
-      },
-    ],
-  }),
   component: HomePage,
 });
 

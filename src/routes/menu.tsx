@@ -6,29 +6,6 @@ import { MENU, CATEGORIES, type MenuCategory } from "@/lib/menu-data";
 import { useCart, formatRub } from "@/lib/cart";
 
 export const Route = createFileRoute("/menu")({
-  head: () => ({
-    meta: [
-      { title: "Меню — Красноярские сладости" },
-      {
-        name: "description",
-        content:
-          "Меню кафе Красноярские сладости: авторские десерты, свежая выпечка и спешелти-кофе. Добавляйте в корзину и заказывайте доставку по Красноярску.",
-      },
-      { property: "og:title", content: "Меню — Красноярские сладости" },
-      {
-        property: "og:description",
-        content: "Десерты, выпечка и кофе с доставкой по Красноярску.",
-      },
-    ],
-    links: [
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap",
-      },
-    ],
-  }),
   component: MenuPage,
 });
 
