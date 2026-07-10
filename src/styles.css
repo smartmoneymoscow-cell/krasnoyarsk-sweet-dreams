@@ -155,9 +155,10 @@
 }
 
 @keyframes slide-fade {
-  0%, 4%   { opacity: 0; }
-  10%, 30% { opacity: 1; }
-  36%, 100%{ opacity: 0; }
+  0%       { opacity: 0; }
+  8%       { opacity: 1; }
+  92%      { opacity: 1; }
+  100%     { opacity: 0; }
 }
 
 @keyframes shimmer {
