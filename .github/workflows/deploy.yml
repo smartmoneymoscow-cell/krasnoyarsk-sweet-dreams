@@ -31,6 +31,15 @@ jobs:
           GITHUB_PAGES: "true"
           NODE_ENV: production
 
+      - name: Find build output
+        run: |
+          echo "=== Searching for index.html ==="
+          find . -name "index.html" -not -path "*/node_modules/*" | head -20
+          echo "=== Listing common output dirs ==="
+          ls -la .output/public/ 2>/dev/null || echo "No .output/public"
+          ls -la dist/ 2>/dev/null || echo "No dist/"
+          ls -la .vinxi/ 2>/dev/null || echo "No .vinxi/"
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
