@@ -6,6 +6,13 @@ import "./styles.css";
 
 const router = getRouter();
 
+// Handle GitHub Pages SPA redirect
+const redirect = sessionStorage.getItem("gh-pages-redirect");
+if (redirect) {
+  sessionStorage.removeItem("gh-pages-redirect");
+  router.navigate({ to: redirect, replace: true });
+}
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
