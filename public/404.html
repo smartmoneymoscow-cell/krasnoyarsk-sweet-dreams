@@ -5,12 +5,16 @@
   <title>Redirecting...</title>
   <script>
     // SPA redirect for GitHub Pages
-    // Store the intended path and redirect to root
-    var path = window.location.pathname.replace('/krasnoyarsk-sweet-dreams', '');
+    var base = '/krasnoyarsk-sweet-dreams';
+    var path = window.location.pathname;
+    // Remove base path prefix
+    if (path.startsWith(base)) {
+      path = path.slice(base.length) || '/';
+    }
     if (path && path !== '/' && path !== '/index.html') {
       sessionStorage.setItem('gh-pages-redirect', path + window.location.search + window.location.hash);
     }
-    window.location.href = '/krasnoyarsk-sweet-dreams/';
+    window.location.href = base + '/';
   </script>
 </head>
 <body>

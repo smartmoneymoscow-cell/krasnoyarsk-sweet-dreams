@@ -10,6 +10,7 @@ const router = getRouter();
 const redirect = sessionStorage.getItem("gh-pages-redirect");
 if (redirect) {
   sessionStorage.removeItem("gh-pages-redirect");
+  // Navigate after router is ready
   router.navigate({ to: redirect, replace: true });
 }
 
